@@ -1,4 +1,4 @@
-use super::{Expr, Type};
+use super::{Expr, Type, AstId};
 use nyanc_core::tokens::Token;
 
 /// 语句的枚举
@@ -24,7 +24,7 @@ pub enum Stmt {
 #[derive(Debug, Clone)]
 pub struct LetStmt {
     pub name: Token,
-    pub value: Expr,
+    pub value: AstId<Expr>,
 }
 
 /// `a: int = 1;`
@@ -32,38 +32,38 @@ pub struct LetStmt {
 pub struct VarStmt {
     pub name: Token,
     pub var_type: Type,
-    pub value: Option<Expr>, // 初始值是可选的
+    pub value: Option<AstId<Expr>>, // 初始值是可选的
 }
 
 /// `return a + 1;`
 #[derive(Debug, Clone)]
 pub struct ReturnStmt {
     pub keyword: Token, // "return" 关键字本身，用于错误报告
-    pub value: Option<Expr>, // 允许 `return;`
+    pub value: Option<AstId<Expr>>, // 允许 `return;`
 }
 
 /// `{ ... }`
 #[derive(Debug, Clone)]
 pub struct BlockStmt {
-    pub stmts: Vec<Stmt>,
+    pub stmts: Vec<AstId<Stmt>>,
 }
 
 /// `a = a + 1;` or `my_func();`
 #[derive(Debug, Clone)]
 pub struct ExprStmt {
-    pub expr: Expr,
+    pub expr: AstId<Expr>,
 }
 
 #[derive(Debug, Clone)]
 pub struct IfStmt {
-    pub condition: Expr,
-    pub then_branch: BlockStmt,
+    pub condition: AstId<Expr>,
+    pub then_branch: AstId<BlockStmt>,
     /// else 分支是可选的，并且可以是另一个 if 语句（用于 else if）或一个代码块
-    pub else_branch: Option<Box<Stmt>>,
+    pub else_branch: Option<AstId<Stmt>>,
 }
 
 #[derive(Debug, Clone)]
 pub struct WhileStmt {
-    pub condition: Expr,
-    pub body: BlockStmt,
+    pub condition: AstId<Expr>,
+    pub body: AstId<BlockStmt>,
 }

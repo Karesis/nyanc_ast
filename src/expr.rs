@@ -1,4 +1,5 @@
 use nyanc_core::tokens::Token;
+use super::AstId;
 
 /// 表达式的枚举
 #[derive(Debug, Clone)]
@@ -28,36 +29,36 @@ pub enum Expr {
 /// `a = 5`
 #[derive(Debug, Clone)]
 pub struct AssignExpr {
-    pub target: Box<Expr>, // 被赋值的目标
-    pub value: Box<Expr>,
+    pub target: AstId<Expr>, // 被赋值的目标
+    pub value: AstId<Expr>,
 }
 
 /// `a + b`
 #[derive(Debug, Clone)]
 pub struct BinaryExpr {
-    pub left: Box<Expr>,
+    pub left: AstId<Expr>,
     pub operator: Token,
-    pub right: Box<Expr>,
+    pub right: AstId<Expr>,
 }
 
 /// `-a`, `!b`
 #[derive(Debug, Clone)]
 pub struct UnaryExpr {
     pub operator: Token,
-    pub right: Box<Expr>,
+    pub right: AstId<Expr>,
 }
 
 /// `my_func(a, b)`
 #[derive(Debug, Clone)]
 pub struct CallExpr {
-    pub callee: Box<Expr>, // 被调用的表达式（通常是变量或成员访问）
+    pub callee: AstId<Expr>, // 被调用的表达式（通常是变量或成员访问）
     pub args: Vec<Expr>,
 }
 
 /// `point.x`
 #[derive(Debug, Clone)]
 pub struct MemberAccessExpr {
-    pub object: Box<Expr>,
+    pub object: AstId<Expr>,
     pub field: Token,
 }
 
@@ -83,5 +84,5 @@ pub struct VariableExpr {
 /// `(1 + 2)`
 #[derive(Debug, Clone)]
 pub struct GroupingExpr {
-    pub expr: Box<Expr>,
+    pub expr: AstId<Expr>,
 }
