@@ -1,14 +1,20 @@
-pub fn add(left: u64, right: u64) -> u64 {
-    left + right
-}
+// 声明子模块
+pub mod expr;
+pub mod item;
+pub mod stmt;
+pub mod ty;
+pub mod use_decl;
+pub mod ast_printer;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+// 重新导出所有子模块的公共内容，方便外部使用
+pub use expr::*;
+pub use item::*;
+pub use stmt::*;
+pub use ty::*;
+pub use use_decl::*;
 
-    #[test]
-    fn it_works() {
-        let result = add(2, 2);
-        assert_eq!(result, 4);
-    }
+/// 代表一个被解析的源文件（一个模块）
+#[derive(Debug, Clone)]
+pub struct Module {
+    pub items: Vec<Item>,
 }
