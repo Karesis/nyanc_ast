@@ -26,7 +26,7 @@ use std::marker::PhantomData;
 /// 它是泛型的，`AstId<Expr>` 和 `AstId<Stmt>` 是不同的类型，防止误用。
 #[derive(Debug, PartialEq, Eq, Hash)]
 pub struct AstId<N> {
-    raw: u32,
+    pub raw: u32,
     _marker: PhantomData<fn() -> N>, // 用于让编译器区分不同的 AstId<T>
 }
 // --- 核心修复点：手动实现 Clone 和 Copy ---
@@ -39,12 +39,6 @@ impl<N> Clone for AstId<N> {
 }
 
 impl<N> Copy for AstId<N> {}
-
-impl<N> AstId<N> {
-    pub fn get_raw(self) -> u32 {
-        return self.raw;
-    }
-}
 
 // --- 2. 定义 AST “中央仓库” (Arena) ---
 /// 这个结构体将拥有解析出的所有 AST 节点
