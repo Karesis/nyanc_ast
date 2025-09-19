@@ -11,7 +11,7 @@ pub enum Stmt {
     // return a + 1;
     Return(ReturnStmt),
     // { ... }
-    Block(BlockStmt),
+    Block(AstId<BlockStmt>),
     // a = a + 1; or my_func();
     Expression(ExprStmt),
     // if condition { ... } else { ... }
@@ -31,7 +31,7 @@ pub struct LetStmt {
 #[derive(Debug, Clone)]
 pub struct VarStmt {
     pub name: Token,
-    pub var_type: Type,
+    pub var_type: AstId<Type>,
     pub value: Option<AstId<Expr>>, // 初始值是可选的
 }
 

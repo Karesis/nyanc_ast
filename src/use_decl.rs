@@ -1,4 +1,5 @@
 use nyanc_core::tokens::Token;
+use crate::AstId;
 
 /// 代表一个限定路径，例如 `std::io` 或 `self::utils`
 #[derive(Debug, Clone)]
@@ -12,11 +13,11 @@ pub struct Path {
 pub enum UseTree {
     /// 导入一个简单的路径，可能带有一个别名。
     /// e.g., `math` or `mathmatical as math`
-    Simple { path: Path, alias: Option<Token> },
+    Simple { path: AstId<Path>, alias: Option<Token> },
     
     /// 导入一个分组。
     /// e.g., `{math, ops}`
-    Group { items: Vec<UseTree> },
+    Group { items: Vec<AstId<UseTree>> },
     
     /// 导入所有内容（通配符）。
     /// e.g., `*`
@@ -29,7 +30,7 @@ pub enum UseTree {
 pub struct UseStmt {
     pub use_keyword: Token, // 'use' 关键字本身
     /// 路径的前缀，对于 `use a::b::{c, d}` 来说，前缀是 `a::b`
-    pub prefix: Option<Path>,
+    pub prefix: Option<AstId<Path>>,
     /// 导入的树状结构主体
-    pub tree: UseTree,
+    pub tree: AstId<UseTree>,
 }

@@ -29,5 +29,5 @@ pub struct StructDef {
 #[derive(Debug, Clone)]
 pub struct Param {
     pub name: Token,
-    pub param_type: Type,
+    pub param_type: AstId<Type>,
 }

@@ -52,7 +52,7 @@ pub struct UnaryExpr {
 #[derive(Debug, Clone)]
 pub struct CallExpr {
     pub callee: AstId<Expr>, // 被调用的表达式（通常是变量或成员访问）
-    pub args: Vec<Expr>,
+    pub args: Vec<AstId<Expr>>,
 }
 
 /// `point.x`
@@ -66,7 +66,7 @@ pub struct MemberAccessExpr {
 #[derive(Debug, Clone)]
 pub struct StructInitExpr {
     pub name: Token,
-    pub fields: Vec<(Token, Expr)>, // (字段名, 字段值)
+    pub fields: Vec<(Token, AstId<Expr>)>, // (字段名, 字段值)
 }
 
 /// `123`, `"hello"`, `true`
